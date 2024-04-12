@@ -52,6 +52,7 @@ class PersonalServicio extends Empleado {
 
 }
 
+
 class CentroEducativo {
     constructor() {
         this.personas = [];
@@ -90,31 +91,37 @@ class CentroEducativo {
     }
 
     buscarPorTipoImprimirInformacion() {
-        const tipo = obtenerTipoPersona();
-        const personas = centroEducativo.filtrarPorTipo(window[tipo.charAt(0).toUpperCase() + tipo.slice(1)]);
+        const tipo = this.obtenerTipoPersona();
+        const tipoClase = tipo.charAt(0).toUpperCase() + tipo.slice(1); //Estoy convirtiendo el tipo en nombre de clase
+        const personas = this.filtrarPorTipo(eval(tipoClase)); //Segun lo que busque, el eval me va a dar la clase correspondiente
         if (personas.length > 0) {
-            console.log(`Información de personas de tipo ${tipo}:`);
+            console.log(`Informacion de personas de ese tipo ${tipo}:`);
             personas.forEach(persona => {
                 persona.imprimirInformacion();
                 console.log("--------------------------------------------");
             });
         } else {
-            console.log(`No se encontraron personas del tipo ${tipo}`);
+            console.log(`No hemos encontrado informacion del tipo ${tipo}`);
         }
     }
     
-    //Ejecutar la función para buscar e imprimir la información de personas por tipo
     
-    //Método para buscar persona por número de identificación
+    //Con este metodo estoy buscando a la persona por el tipo de informacion y, al encontrarla, muestra su info con imprimirInformacion, de lo contrario mustra que no se encontró a nadie con ese numero
     buscarPorNumIdentificacion(num_identificacion) {
-        return this.personas.find(persona => persona.num_identificacion === num_identificacion);
+        const index = this.personas.findIndex(persona => persona.num_identificacion === num_identificacion);
+        if (index !== -1) {
+            const personaEncontrada = this.personas[index];
+            console.log(`Información de la persona con el número de identificación ${num_identificacion}:`);
+            personaEncontrada.imprimirInformacion();
+        } else {
+            console.log(`No se encontró ninguna persona con el número de identificación: ${num_identificacion}.`);
+        }
     }
     obtenerNumIdentificacion() {
         return prompt("Ingrese el número de identificación de la persona que desea buscar:");
     }
 
-    //Creo un metodo para mostrar la informacion en el console log
-    imprimirInformacion() {
+    imprimirInformacion2() {
         const opcion = obtenerRespuesta(
             "Seleccione una opcion:\n" +
             "1- Mostrar alfabeticamente\n" +
@@ -123,23 +130,28 @@ class CentroEducativo {
             "4- Salir"
         );
     
-        switch (opcion) {//Creo un switch para que le sea mas simple al administrador de elegir las opciones
+        switch (opcion) {
             case "1":
                 this.ordenarPorApellido();
+                this.imprimirInformacion();
                 break;
             case "2":
-                this.obtenerTipoPersona();
-                this.buscarPorTipoImprimirInformacion
+                this.buscarPorTipoImprimirInformacion();
                 break;
             case "3":
-                this.obtenerNumIdentificacion();
-                this.buscarPorNumIdentificacion();
+                const num_identificacion = this.obtenerNumIdentificacion();
+                this.buscarPorNumIdentificacion(num_identificacion);
                 break;
             case "4":
                 menuPrincipal();
                 break;
-            
+            default:
+                mostrarMensaje("Opción no válida.");
+                this.imprimirInformacion2(); // Si la opción no es válida, mostrar nuevamente las opciones
         }
+    }
+    //Creo un metodo para mostrar la informacion en el console log
+    imprimirInformacion() {
         console.log("Informacion de las personas registradas:");
         this.personas.forEach(persona => {
             persona.imprimirInformacion();
@@ -228,9 +240,9 @@ function darDeAlta() {
 function crearEstudiante() {
     const nombre = obtenerRespuesta("Ingrese el nombre del estudiante");
     const apellidos = obtenerRespuesta("Ingrese los apellidos del estudiante");
-    const num_identificacion = obtenerRespuesta("Ingrese el número de identificación del estudiante");
+    const num_identificacion = obtenerRespuesta("Ingrese el numero de identificacion del estudiante");
     const estado_civil = obtenerRespuesta("Ingrese el estado civil del estudiante");
-    const curso = obtenerRespuesta("Ingrese el curso matriculado del estudiante");
+    const curso = obtenerRespuesta("Ingrese el curso del estudiante");
     return new Estudiante(nombre, apellidos, num_identificacion, estado_civil, curso);
 }
 
@@ -238,10 +250,10 @@ function crearEstudiante() {
 function crearProfesor() {
     const nombre = obtenerRespuesta("Ingrese el nombre del profesor");
     const apellidos = obtenerRespuesta("Ingrese los apellidos del profesor");
-    const num_identificacion = obtenerRespuesta("Ingrese el número de identificación del profesor");
+    const num_identificacion = obtenerRespuesta("Ingrese el numero de identificacion del profesor");
     const estado_civil = obtenerRespuesta("Ingrese el estado civil del profesor");
-    const año_incorporacion = obtenerRespuesta("Ingrese el año de incorporación del profesor");
-    const num_despacho = obtenerRespuesta("Ingrese el número de despacho del profesor");
+    const año_incorporacion = obtenerRespuesta("Ingrese el año de incorporacion del profesor");
+    const num_despacho = obtenerRespuesta("Ingrese el numero de despacho del profesor");
     const departamento = obtenerRespuesta("Ingrese el departamento del profesor");
     return new Profesor(nombre, apellidos, num_identificacion, estado_civil, año_incorporacion, num_despacho, departamento);
 }
@@ -250,11 +262,11 @@ function crearProfesor() {
 function crearPersonalServicio() {
     const nombre = obtenerRespuesta("Ingrese el nombre del personal de servicio");
     const apellidos = obtenerRespuesta("Ingrese los apellidos del personal de servicio");
-    const num_identificacion = obtenerRespuesta("Ingrese el número de identificación del personal de servicio");
+    const num_identificacion = obtenerRespuesta("Ingrese el numero de identificacion del personal de servicio");
     const estado_civil = obtenerRespuesta("Ingrese el estado civil del personal de servicio");
-    const año_incorporacion = obtenerRespuesta("Ingrese el año de incorporación del personal de servicio");
-    const num_despacho = obtenerRespuesta("Ingrese el número de despacho del personal de servicio");
-    const seccion = obtenerRespuesta("Ingrese la sección asignada del personal de servicio");
+    const año_incorporacion = obtenerRespuesta("Ingrese el año de incorporacion del personal de servicio");
+    const num_despacho = obtenerRespuesta("Ingrese el numero de despacho del personal de servicio");
+    const seccion = obtenerRespuesta("Ingrese la seccion asignada del personal de servicio");
     return new PersonalServicio(nombre, apellidos, num_identificacion, estado_civil, año_incorporacion, num_despacho, seccion);
 }
 
@@ -267,7 +279,7 @@ function darDeBaja() {
 
 //En este caso tambien vuelve a el metodo de arriba imprimirinformacion
 function listarInformacion() {
-    centroEducativo.imprimirInformacion();
+    centroEducativo.imprimirInformacion2();
     menuPrincipal();
 }
 
