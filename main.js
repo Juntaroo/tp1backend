@@ -103,9 +103,9 @@ class CentroEducativo {
         }
     }
     
-    // Ejecutar la función para buscar e imprimir la información de personas por tipo
+    //Ejecutar la función para buscar e imprimir la información de personas por tipo
     
-    // Método para buscar persona por número de identificación
+    //Método para buscar persona por número de identificación
     buscarPorNumIdentificacion(num_identificacion) {
         return this.personas.find(persona => persona.num_identificacion === num_identificacion);
     }
