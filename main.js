@@ -228,6 +228,7 @@ function darDeAlta() {
             break;
         default:
             mostrarMensaje("Ingresó un valor incorrecto.");
+            menuPrincipal();
             return;
     }
 
