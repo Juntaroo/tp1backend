@@ -111,14 +111,14 @@ class CentroEducativo {
         const index = this.personas.findIndex(persona => persona.num_identificacion === num_identificacion);
         if (index !== -1) {
             const personaEncontrada = this.personas[index];
-            console.log(`Información de la persona con el número de identificación ${num_identificacion}:`);
+            console.log(`Info de la persona con ese numero de identificacion: ${num_identificacion}:`);
             personaEncontrada.imprimirInformacion();
         } else {
-            console.log(`No se encontró ninguna persona con el número de identificación: ${num_identificacion}.`);
+            console.log(`No se encontró ninguna persona con ${num_identificacion} como numero de identificacion.`);
         }
     }
     obtenerNumIdentificacion() {
-        return prompt("Ingrese el número de identificación de la persona que desea buscar:");
+        return prompt("Ingrese el numero de identificacion:");
     }
 
     imprimirInformacion2() {
@@ -202,7 +202,7 @@ function menuPrincipal() {
             break;
         default:
             mostrarMensaje("Error, seleccione una de las opciones que le ofrecemos.");
-            menuPrincipal();
+            menuPrincipal();//en este caso de equivocarse, le devuelvo al usuario al menu, de lo contrario tendria que recargar la página
     }
 }
 
